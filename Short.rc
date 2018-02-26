@@ -1,0 +1,116 @@
+// SDK.rc
+// Copyright (c) 2000 Microsoft Corp.  All Rights Reserved
+
+#include "short.h"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION VERSION_MAJOR,VERSION_MINOR,0,VERSION_BUILD
+ PRODUCTVERSION VERSION_MAJOR,VERSION_MINOR,0,VERSION_BUILD
+ FILEFLAGSMASK 0x3fL
+ FILEFLAGS 0x0L
+ FILEOS 0x10004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "Winds Aloft\0"
+            VALUE "FileDescription", "Prepar3d v3 gauge\0"
+            VALUE "FileVersion", VERSION_STRING
+            VALUE "LegalCopyright", "Winds Aloft (c) 2017.\0"
+            VALUE "ProductName", "Shorts 360\0"
+            VALUE "ProductVersion", VERSION_STRING
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Attitude Bitmaps
+//
+BMP_ATTITUDE_BACKGROUND				BITMAP	DISCARDABLE		"res\\Attitude\\Attitude_Arrow_Icon.BMP"
+BMP_ATTITUDE_CARD_INSIDE			BITMAP	DISCARDABLE		"res\\Attitude\\Attitude_Card_Inside.BMP"
+BMP_ATTITUDE_CARD_OUTSIDE_MASK		BITMAP	DISCARDABLE		"res\\Attitude\\Attitude_Card_Outside_Mask.BMP"
+BMP_ATTITUDE_CARD_OUTSIDE			BITMAP	DISCARDABLE		"res\\Attitude\\Attitude_Card_Outside.BMP"
+BMP_ATTITUDE_CARD_INSIDE_MASK		BITMAP	DISCARDABLE		"res\\Attitude\\Attitude_Card_Inside_Mask.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Airspeed Bitmaps
+//
+BMP_AIRSPEED_BACKGROUND				BITMAP	DISCARDABLE		"res\\Airspeed\\Airspeed_Background.BMP"
+BMP_AIRSPEED_NEEDLE					BITMAP	DISCARDABLE		"res\\Airspeed\\Airspeed_Needle.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Altimeter Images
+//
+BMP_ALT_BACKGROUND					BITMAP	DISCARDABLE		"res\\Altimeter\\alt_Background.BMP"
+BMP_ALT_NEEDLE						BITMAP	DISCARDABLE		"res\\Altimeter\\alt_needle.BMP"
+BMP_ALT_HUN_TAPE					BITMAP	DISCARDABLE		"res\\Altimeter\\alt_hun_tape.BMP"
+BMP_ALT_TENTHOU_TAPE				BITMAP	DISCARDABLE		"res\\Altimeter\\alt_tenthou_tape.BMP"
+BMP_ALT_THOU_TAPE					BITMAP	DISCARDABLE		"res\\Altimeter\\alt_thou_tape.BMP"
+BMP_ALT_HUN_MASK					BITMAP	DISCARDABLE		"res\\Altimeter\\alt_hun_mask.BMP"
+BMP_ALT_THOU_MASK					BITMAP	DISCARDABLE		"res\\Altimeter\\alt_thou_mask.BMP"
+BMP_ALT_TENTHOU_MASK				BITMAP	DISCARDABLE		"res\\Altimeter\\alt_tenthou_mask.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Fuel Gauge Bitmaps
+//
+BMP_FUEL_BACKGROUND					BITMAP	DISCARDABLE		"res\\Fuel\\Fuel100_BG.bmp"
+BMP_FUEL_NEEDLE						BITMAP  DISCARDABLE		"res\\Fuel\\Fuel_Needle2.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Whiskey CompassBitmaps
+//
+BMP_COMPASS_SMALL_BACKGROUND		BITMAP	DISCARDABLE		"res\\Whiskey\\SDK.Whiskey.bg.BMP"
+BMP_COMPASS_SMALL_CARD				BITMAP	DISCARDABLE		"res\\Whiskey\\SDK.Whiskey.card.BMP"
+BMP_COMPASS_SMALL_MASK				BITMAP	DISCARDABLE		"res\\Whiskey\\SDK.Whiskey.mask.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Flight Map Background
+//
+BMP_FLIGHT_MAP_BACKGROUND		BITMAP	DISCARDABLE		"res\\SDK.FlightMap.BMP"
+BMP_FLIGHT_MAP_BLANK			BITMAP	DISCARDABLE		"res\\SDK.FlightMap.Blank.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Voltmeter Images
+//
+BMP_VOLTMETER_NEEDLE			BITMAP	DISCARDABLE		"res\\Voltmeter\\batt_needle.BMP"
+BMP_VOLTMETER_MASK				BITMAP	DISCARDABLE		"res\\Voltmeter\\batt_mask.BMP"
+BMP_VOLTMETER_BACKGROUND		BITMAP	DISCARDABLE		"res\\Voltmeter\\batt_bg.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Engine Data Images
+//
+BMP_RPM_BACKGROUND				BITMAP	DISCARDABLE		"res\\Engine\\RPM_Background.BMP"
+BMP_RPMPCT_BACKGROUND			BITMAP	DISCARDABLE		"res\\Engine\\RPM.BMP"
+BMP_RPM_NEEDLELG				BITMAP	DISCARDABLE		"res\\Engine\\RPM_Needle_Lg.BMP"
+BMP_RPM_NEEDLESM				BITMAP	DISCARDABLE		"res\\Engine\\RPM_Needle_Sm.BMP"
+BMP_RPM_NEEDLE1					BITMAP	DISCARDABLE		"res\\Engine\\Needle_RPM1.BMP"
+BMP_RPM_NEEDLE2					BITMAP	DISCARDABLE		"res\\Engine\\Needle_RPM2.BMP"
+BMP_FFENGINE_NEEDLE1			BITMAP	DISCARDABLE		"res\\Engine\\Needle_FFEngine1.BMP"
+BMP_FFENGINE_NEEDLE2			BITMAP	DISCARDABLE		"res\\Engine\\Needle_FFEngine2.BMP"
+BMP_OIL_BACKGROUND				BITMAP	DISCARDABLE		"res\\Engine\\OIL_Background.BMP"
+BMP_OIL_NEEDLE					BITMAP	DISCARDABLE		"res\\Engine\\OIL_Needle.BMP"
+BMP_FF_BACKGROUND				BITMAP	DISCARDABLE		"res\\Engine\\FF_Background.BMP"
+BMP_TORQUE_NEEDLE				BITMAP	DISCARDABLE		"res\\Engine\\Needle_Torque.BMP"
+BMP_TORQUE_BACKGROUND			BITMAP	DISCARDABLE		"res\\Engine\\Torque_Background.BMP"
+BMP_PROP_RPM					BITMAP	DISCARDABLE		"res\\Engine\\Prop_RPM.BMP"
