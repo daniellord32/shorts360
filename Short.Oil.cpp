@@ -7,8 +7,9 @@
 char	oil_gauge_name[] =		GAUGE_NAME;
 extern	PELEMENT_HEADER			oil_list;
 extern	MOUSERECT				oil_mouse_rect[];
+GAUGE_CALLBACK					oil_temp_update;
 
-GAUGE_HEADER_FS700(GAUGE_W, oil_gauge_name, &oil_list,oil_mouse_rect, 0, 0, 0, 0);
+GAUGE_HEADER_FS700(GAUGE_W, oil_gauge_name, &oil_list,oil_mouse_rect, oil_temp_update, 0, 0, 0, 0);
 
 //end of gauge header
 
@@ -45,14 +46,19 @@ NONLINEARITY oil_temp[] =
  time_t timer;
 
  UINT8 fuelPsi,oilTemp;
- MODULE_VAR temp = {ENGINE1_OIL_TEMPERATURE};
- MODULE_VAR PSI = {ENGINE1_OIL_PRESSURE};
+ MODULE_VAR temp = {ENGINE1_OIL_TEMPERATURE}; //gets engine 1 temperature.
+ MODULE_VAR PSI = {ENGINE1_OIL_PRESSURE}; //gets engine 1 oil pressure.
 
 #define PSI_MAX 200
 #define PSI_MIN 0
 #define TEMP_MAX 140
 #define TEMP_MIN -20
+double oil_warn = 0;
+double psu_warn = 0;
+ID oil_warningId;
+ID psu_warningId;
 
+//basic needle max and min values to configure needle movement.
 FLOAT64 FSAPI oil_psi_cb(PELEMENT_NEEDLE pelement)
 {
 	lookup_var(&PSI);
@@ -61,44 +67,113 @@ FLOAT64 FSAPI oil_psi_cb(PELEMENT_NEEDLE pelement)
 	if(fuelPsi > PSI_MAX)
 	{
 		fuelPsi = PSI_MAX;
-		//Warning to show here on anumicator, if not solved engine can fail
-		//need to find out if it is possible to do.
+		
 	}
 	if( fuelPsi < PSI_MIN)
 	{
 		fuelPsi = PSI_MIN;
-		//Warning to show here on anumicator
-		//need to find out if it is possible to do.
+		set_named_variable_value(psu_warningId, (FLOAT64)psu_warn); //send c++ data to XML file.
 	}
 
 	return fuelPsi;
 }
 
+//basic needle max and min values to configure needle movement.
 FLOAT64 FSAPI oil_temp_cb(PELEMENT_NEEDLE pelement)
 {
 	lookup_var(&temp);
-	oilTemp = temp.var_value.n/160;
-	//idea is if it takes longer then 15 minutes to respond to high temp warning, engine will catch fire.
-	if(oilTemp >= TEMP_MAX)
+	oilTemp = temp.var_value.n / 160;
+
+	if (oilTemp > PSI_MAX)
 	{
-		oilTemp = TEMP_MAX;
-		int maxTime = 15*60;
-		time(&timer);
-		double mins = difftime(timer,maxTime);
-		if(mins > maxTime)
-		{
-			ENGINE1_ON_FIRE:1;
-		}
-		//Warning to show here on anumicator, if not solved can start engine fire!
-		//need to find out if it is possible to do.
+		oilTemp = PSI_MAX;
+		
 	}
-	if(oilTemp < TEMP_MIN)
+	if (oilTemp < PSI_MIN)
 	{
-		oilTemp = TEMP_MIN;
-		//Warning to show here on anumicator, if not solved engine can fail!
-		//need to find out if it is possible to do.
+		oilTemp = PSI_MIN;
 	}
+
 	return oilTemp;
+	
+}
+
+void FSAPI oil_temp_update(PGAUGEHDR pgauge, int service_id, UINT32 extra_data)
+{
+	switch (service_id)
+	{
+
+	case PANEL_SERVICE_PRE_INSTALL:
+		break;
+	case PANEL_SERVICE_POST_INSTALL:
+		break;
+	case PANEL_SERVICE_PRE_INITIALIZE:
+		break;
+	case PANEL_SERVICE_PRE_UPDATE: //checks 18 times a second.
+		//oil temp Init
+		oilTemp = TEMP_MAX;
+		lookup_var(&temp);
+		oilTemp = temp.var_value.n / 160;
+
+		//oil pressure Init
+		fuelPsi = PSI_MAX;
+		lookup_var(&PSI);
+		oilTemp = PSI.var_value.n / 160;
+
+		//timer Init
+		int maxTime = 15 * 60;
+		time(&timer);
+		double mins = difftime(timer, maxTime);
+
+		//Oil temp alogritim
+		//if it takes longer then 15 minutes to respond to high temp warning, engine will catch fire.
+		if (oilTemp >= TEMP_MAX)
+		{
+			if (mins > maxTime)
+			{
+				ENGINE1_ON_FIRE : 1;
+			}
+			set_named_variable_value(oil_warningId, (FLOAT64)oil_warn); //send c++ data to XML file.
+		}
+		if (oilTemp < TEMP_MIN)
+		{
+			oilTemp = TEMP_MIN;
+			set_named_variable_value(oil_warningId, (FLOAT64)oil_warn); //send c++ data to XML file.
+			if (mins > maxTime)
+			{
+				ENGINE1_FUEL_PUMP_ON : 0; //shuts down the engine (simulate engine seizure).
+				//Will need to program a new way of shutting down engine that can not be restarted.
+			}
+		}
+
+		//Oil Pressure Algoritim
+		//if it takes longer then 15 minutes to respond to high temp warning, engine will catch fire.
+		if (oilTemp >= TEMP_MAX)
+		{
+			if (mins > maxTime)
+			{
+				ENGINE1_ON_FIRE : 1;
+			}
+			set_named_variable_value(psu_warningId, (FLOAT64)psu_warn); //send c++ data to XML file. 
+		}
+		if (oilTemp < TEMP_MIN)
+		{
+			oilTemp = TEMP_MIN;
+			set_named_variable_value(psu_warningId, (FLOAT64)psu_warn); //send c++ data to XML file.
+			if (mins > maxTime)
+			{
+				ENGINE1_FUEL_PUMP_ON : 0; //shuts down the engine (simulate engine seizure).
+				//Will need to program a new way of shutting down engine that can not be restarted.
+			}
+		}
+		break;
+	case PANEL_SERVICE_PRE_DRAW:
+		break;
+	case PANEL_SERVICE_PRE_KILL:
+		break;
+	case PANEL_SERVICE_DISCONNECT:
+		break;
+	}
 }
 
 //-----------------------------------------------------------

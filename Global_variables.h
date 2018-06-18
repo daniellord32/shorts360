@@ -1,0 +1,1 @@
+double power_on = 0;  //1 = on, 0 = off.
