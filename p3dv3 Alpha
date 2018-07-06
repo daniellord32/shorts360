@@ -1,0 +1,9 @@
+Alpha version of the Shorts-360 aircraft, I have only tested with P3D v3, I have not tested with other versions.
+
+Please note this is an Alpha version, alot of things have not been implemented and some gauges are either not displaying or are not displaying correct information.
+
+Other then that it does fly and the majority of animations are currently working.
+
+error list:
+ensure you have ms C++ re-distributal, I initially started the project using vs2008. I am not sure of the version needed at this time but will provide a link
+to the correct one once I have found out which version is required.
