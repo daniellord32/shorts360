@@ -41,10 +41,11 @@ END
 // Attitude Bitmaps
 //
 BMP_ATTITUDE_BACKGROUND				BITMAP	DISCARDABLE		"res\\Attitude\\Attitude_Arrow_Icon.BMP"
+BMP_ATTITUDE_CARD_INSIDE_MASK		BITMAP	DISCARDABLE		"res\\Attitude\\Attitude_Card_Inside_Mask.BMP"
 BMP_ATTITUDE_CARD_INSIDE			BITMAP	DISCARDABLE		"res\\Attitude\\Attitude_Card_Inside.BMP"
 BMP_ATTITUDE_CARD_OUTSIDE_MASK		BITMAP	DISCARDABLE		"res\\Attitude\\Attitude_Card_Outside_Mask.BMP"
 BMP_ATTITUDE_CARD_OUTSIDE			BITMAP	DISCARDABLE		"res\\Attitude\\Attitude_Card_Outside.BMP"
-BMP_ATTITUDE_CARD_INSIDE_MASK		BITMAP	DISCARDABLE		"res\\Attitude\\Attitude_Card_Inside_Mask.BMP"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -55,16 +56,11 @@ BMP_AIRSPEED_NEEDLE					BITMAP	DISCARDABLE		"res\\Airspeed\\Airspeed_Needle.BMP"
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Altimeter Images
+// com1 Images
 //
-BMP_ALT_BACKGROUND					BITMAP	DISCARDABLE		"res\\Altimeter\\alt_Background.BMP"
-BMP_ALT_NEEDLE						BITMAP	DISCARDABLE		"res\\Altimeter\\alt_needle.BMP"
-BMP_ALT_HUN_TAPE					BITMAP	DISCARDABLE		"res\\Altimeter\\alt_hun_tape.BMP"
-BMP_ALT_TENTHOU_TAPE				BITMAP	DISCARDABLE		"res\\Altimeter\\alt_tenthou_tape.BMP"
-BMP_ALT_THOU_TAPE					BITMAP	DISCARDABLE		"res\\Altimeter\\alt_thou_tape.BMP"
-BMP_ALT_HUN_MASK					BITMAP	DISCARDABLE		"res\\Altimeter\\alt_hun_mask.BMP"
-BMP_ALT_THOU_MASK					BITMAP	DISCARDABLE		"res\\Altimeter\\alt_thou_mask.BMP"
-BMP_ALT_TENTHOU_MASK				BITMAP	DISCARDABLE		"res\\Altimeter\\alt_tenthou_mask.BMP"
+BMP_COM1_BACKGROUND					BITMAP	DISCARDABLE		"res\\Comm1\\Screens_Nav_Com.BMP"
+BMP_COM1_NIGHT						BITMAP	DISCARDABLE		"res\\Comm1\\Screens_Nav_Com_Night.BMP"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -85,8 +81,8 @@ BMP_COMPASS_SMALL_MASK				BITMAP	DISCARDABLE		"res\\Whiskey\\SDK.Whiskey.mask.BM
 //
 // Flight Map Background
 //
-BMP_FLIGHT_MAP_BACKGROUND		BITMAP	DISCARDABLE		"res\\SDK.FlightMap.BMP"
-BMP_FLIGHT_MAP_BLANK			BITMAP	DISCARDABLE		"res\\SDK.FlightMap.Blank.BMP"
+BMP_FLIGHT_MAP_BACKGROUND		BITMAP	DISCARDABLE		"res\\FlightMap\\SDK.FlightMap.BMP"
+BMP_FLIGHT_MAP_BLANK			BITMAP	DISCARDABLE		"res\\FlightMap\\SDK.FlightMap.Blank.BMP"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -114,3 +110,21 @@ BMP_FF_BACKGROUND				BITMAP	DISCARDABLE		"res\\Engine\\FF_Background.BMP"
 BMP_TORQUE_NEEDLE				BITMAP	DISCARDABLE		"res\\Engine\\Needle_Torque.BMP"
 BMP_TORQUE_BACKGROUND			BITMAP	DISCARDABLE		"res\\Engine\\Torque_Background.BMP"
 BMP_PROP_RPM					BITMAP	DISCARDABLE		"res\\Engine\\Prop_RPM.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// HSI Images
+//
+BMP_HSI_BACKGROUND				BITMAP	DISCARDABLE		"res\\HSI\\HSI_Background.BMP"
+BMP_HSI_CARD_INSIDE				BITMAP	DISCARDABLE		"res\\HSI\\HSI_Card_Inside.BMP"
+BMP_HSI_CARD_OUTSIDE			BITMAP	DISCARDABLE		"res\\HSI\\HSI_Card_Outside.BMP"
+BMP_HSI_CARD_OUTSIDE_MASK		BITMAP	DISCARDABLE		"res\\HSI\\HSI_Card_Outside_Mask.BMP"
+BMP_HSI_FLAG_HDG				BITMAP	DISCARDABLE		"res\\HSI\\HSI_Flag_Hdg.BMP"
+BMP_HSI_FLAG_NAV				BITMAP	DISCARDABLE		"res\\HSI\\HSI_Flag_Nav.BMP"
+BMP_HSI_FROM_POINTER			BITMAP	DISCARDABLE		"res\\HSI\\HSI_From_Pointer.BMP"
+BMP_HSI_GLIDESLOPE_LEFT			BITMAP	DISCARDABLE		"res\\HSI\\hsi_glide_slope_left.BMP"
+BMP_HSI_GLIDESLOPE_RIGHT		BITMAP	DISCARDABLE		"res\\HSI\\hsi_glide_slope_right.BMP"
+BMP_HSI_MASK					BITMAP	DISCARDABLE		"res\\HSI\\hsi_mask.BMP"
+BMP_HSI_NEEDLE					BITMAP	DISCARDABLE		"res\\HSI\\HSI_Needle.BMP"
+BMP_HSI_POINTER					BITMAP	DISCARDABLE		"res\\HSI\\HSI_Pointer.BMP"
+BMP_HSI_TO_POINTER				BITMAP	DISCARDABLE		"res\\HSI\\HSI_To_Pointer.BMP"

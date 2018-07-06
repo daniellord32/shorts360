@@ -1,8 +1,10 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved. 
+//Copyright (c) Daniel Lord.  All rights reserved. 
 
-#include "..\inc\gauges.h"
+//#include "..\inc\gauges.h"
 #include "dragonflight.h"
 #include "Short.h"
+#include "Global_variables.h"
+#include "fsxgauges_sp2.h"
 
 /******************GLOBAL VARIABLES***************************/
 //incoming power signal for all gauges.
@@ -11,14 +13,36 @@ UINT8 power_on = 0;
 UINT8 lights_on = 0;
 
 
-/***************** SHOW/HIDE functions ***********************/
+/////////////////////////////////////////////////////////////////////////////
+// XML Handler
+/////////////////////////////////////////////////////////////////////////////
+#define		GAUGE_NAME			"xml_handler\0"
+#define		GAUGEHDR_VAR_NAME	gaugehdr_xml_handler
+#define		GAUGE_W				38
 
-void FSAPI	add_imagedata_to_listelement(PELEMENT_HEADER	pelement,UINT32	pos_element,FLAGS image_flags);
-void FSAPI	remove_imagedata_from_listelement(PELEMENT_HEADER	pelement,UINT32	pos_element,FLAGS image_flags);
+#include "XML_Handler.cpp"
+
+#undef GAUGE_NAME
+#undef GAUGEHDR_VAR_NAME
+#undef GAUGE_W
+
+/////////////////////////////////////////////////////////////////////////////
+// Systems Handler
+/////////////////////////////////////////////////////////////////////////////
+// Action code held completely separate from both the C gauge and the XML gauge
+#define		GAUGE_NAME			"systems_handler\0"
+#define		GAUGEHDR_VAR_NAME	gaugehdr_systems_handler
+#define		GAUGE_W				38
+
+#include "Systems_Handler.cpp"
+
+#undef GAUGE_NAME
+#undef GAUGEHDR_VAR_NAME
+#undef GAUGE_W
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Attitude
+// Attitude (needs re-aligned)
 /////////////////////////////////////////////////////////////////////////////
 #define     GAUGE_NAME          "Attitude"
 #define     GAUGEHDR_VAR_NAME   gaugehdr_attitude
@@ -27,7 +51,7 @@ void FSAPI	remove_imagedata_from_listelement(PELEMENT_HEADER	pelement,UINT32	pos
 #include "Short.Attitude.cpp"
 
 /////////////////////////////////////////////////////////////////////////////
-// Fuel Left
+// Fuel Left (working no issues)
 /////////////////////////////////////////////////////////////////////////////
 #define     GAUGE_NAME          "Fuel"
 #define     GAUGEHDR_VAR_NAME   gaugehdr_fuel
@@ -36,7 +60,7 @@ void FSAPI	remove_imagedata_from_listelement(PELEMENT_HEADER	pelement,UINT32	pos
 #include "Short.Fuel.cpp"
 
 /////////////////////////////////////////////////////////////////////////////
-// Fuel Left
+// Fuel Left (working no issues)
 /////////////////////////////////////////////////////////////////////////////
 
 #define		GAUGE_NAME			"Fuel_Right"
@@ -46,7 +70,7 @@ void FSAPI	remove_imagedata_from_listelement(PELEMENT_HEADER	pelement,UINT32	pos
 #include "Short.Fuel_Right.cpp"
 
 /////////////////////////////////////////////////////////////////////////////
-// Whiskey
+// Whiskey (need to implement)
 /////////////////////////////////////////////////////////////////////////////
 #define     GAUGE_NAME          "Whiskey"
 #define     GAUGEHDR_VAR_NAME   gaugehdr_whiskey
@@ -55,7 +79,7 @@ void FSAPI	remove_imagedata_from_listelement(PELEMENT_HEADER	pelement,UINT32	pos
 #include "Short.Whiskey.cpp"
 
 /////////////////////////////////////////////////////////////////////////////
-// Voltmeter
+// Voltmeter (need to fix xml script)
 /////////////////////////////////////////////////////////////////////////////
 
 /************** Mouse Background Data ***********************/
@@ -68,7 +92,7 @@ PELEMENT_STATIC_IMAGE	pstat=NULL;
 #include "short.Voltmeter.cpp"
 
 /////////////////////////////////////////////////////////////////////////////
-// Engine 1 RPM percent
+// Engine 1 RPM percent (working no issues)
 /////////////////////////////////////////////////////////////////////////////
 #define		GAUGE_NAME			"Engine1RPM"
 #define		GAUGEHDR_VAR_NAME	gaugehdr_engine1rpm
@@ -77,7 +101,16 @@ PELEMENT_STATIC_IMAGE	pstat=NULL;
 #include	"Shorts.RpmPct.cpp"
 
 /////////////////////////////////////////////////////////////////////////////
-// Airspeed
+// Engine 2 RPM percent (working no issues)
+/////////////////////////////////////////////////////////////////////////////
+#define		GAUGE_NAME			"Engine2RPM"
+#define		GAUGEHDR_VAR_NAME	gaugehdr_engine2rpm
+#define		GAUGE_W				100
+
+#include	"Short.PpmPCTe2.cpp"
+
+/////////////////////////////////////////////////////////////////////////////
+// Airspeed (replaced to 3D no longer needed)
 /////////////////////////////////////////////////////////////////////////////
 
 #define		GAUGE_NAME				"Airspeed"
@@ -87,17 +120,7 @@ PELEMENT_STATIC_IMAGE	pstat=NULL;
 #include "Short.Airspeed.cpp"
 
 /////////////////////////////////////////////////////////////////////////////
-// Altimeter
-/////////////////////////////////////////////////////////////////////////////
-
-#define		GAUGE_NAME				"Altimeter"
-#define		GAUGEHDR_VAR_NAME		gaugehdr_altimeter
-#define		GAUGE_W					100
-
-#include "Short.Altimeter.cpp"
-
-/////////////////////////////////////////////////////////////////////////////
-// Oil PSI/Temp
+// Oil PSI/Temp (working no issues)(implementing custom effects)
 /////////////////////////////////////////////////////////////////////////////
 
 #define GAUGE_NAME				"OilPSI"
@@ -107,7 +130,17 @@ PELEMENT_STATIC_IMAGE	pstat=NULL;
 #include "Short.Oil.cpp"
 
 /////////////////////////////////////////////////////////////////////////////
-// Engine 1 Torque
+// Oil PSI/Temp (working no issues) (implementing custom effects)
+/////////////////////////////////////////////////////////////////////////////
+
+#define GAUGE_NAME				"OilPSIE2"
+#define GAUGEHDR_VAR_NAME		gaugehdr_oilpsie2
+#define GAUGE_W					100
+
+#include "Short.OilE2.cpp"
+
+/////////////////////////////////////////////////////////////////////////////
+// Engine 1 Torque (needs work)
 /////////////////////////////////////////////////////////////////////////////
 
 #define GAUGE_NAME			"Engine1Torque"
@@ -117,7 +150,7 @@ PELEMENT_STATIC_IMAGE	pstat=NULL;
 #include "Short.TorqueE1.cpp"
 
 /////////////////////////////////////////////////////////////////////////////
-// Engine 1 Torque
+// Engine 1 Fuel Flow (needs work)
 /////////////////////////////////////////////////////////////////////////////
 
 #define GAUGE_NAME			"FuelFlowE1"
@@ -127,7 +160,17 @@ PELEMENT_STATIC_IMAGE	pstat=NULL;
 #include "Short.Fuel_FlowE1.cpp"
 
 /////////////////////////////////////////////////////////////////////////////
-// Engine 1 Prop RPM
+// Engine 2 Fuel Flow (needs work)
+/////////////////////////////////////////////////////////////////////////////
+
+#define GAUGE_NAME			"FuelFlowE2"
+#define GAUGEHDR_VAR_NAME	gaugehdr_fuelflowe2
+#define GAUGE_W				100
+
+#include "Shorts.Fuel_FlowE2.cpp"
+
+/////////////////////////////////////////////////////////////////////////////
+// Engine 1 Prop RPM (need to fix needle movement)
 /////////////////////////////////////////////////////////////////////////////
 
 #define GAUGE_NAME			"PropRPM"
@@ -135,6 +178,45 @@ PELEMENT_STATIC_IMAGE	pstat=NULL;
 #define GAUGE_W				100
 
 #include "Short.Prop_RPM.cpp"
+
+/////////////////////////////////////////////////////////////////////////////
+// Engine 2 Prop RPM (need to fix needle movement)
+/////////////////////////////////////////////////////////////////////////////
+
+#define GAUGE_NAME			"PropRPMe2"
+#define GAUGEHDR_VAR_NAME	gaugehdr_proprpme2
+#define GAUGE_W				100
+
+#include "Short.Prop_RPME2.cpp"
+
+/////////////////////////////////////////////////////////////////////////////
+// HSI gauge
+/////////////////////////////////////////////////////////////////////////////
+
+//#define GAUGE_NAME			"Hsi"
+//#define GAUGEHDR_VAR_NAME	gaugehdr_hsi
+//#define GAUGE_W				100
+//
+//#include "Short.HSI.cpp"
+
+/////////////////////////////////////////////////////////////////////////////
+// Flight Map
+/////////////////////////////////////////////////////////////////////////////
+#define GAUGE_NAME			"Flightmap"
+#define GAUGEHDR_VAR_NAME	gaugehdr_flightmap
+#define GAUGE_W				100
+
+#include "Shorts.FlightMap.cpp"
+
+/////////////////////////////////////////////////////////////////////////////
+// Com1 (currently working)
+/////////////////////////////////////////////////////////////////////////////
+
+#define GAUGE_NAME			"Com1"
+#define GAUGEHDR_VAR_NAME	gaugehdr_com1
+#define GAUGE_W				100
+
+#include "Shorts.Com1.cpp"
 
 /////////////////////////////////////////////////////////////////////////////
 // Gauge table entries
@@ -145,11 +227,18 @@ GAUGE_TABLE_BEGIN()
     GAUGE_TABLE_ENTRY(&gaugehdr_whiskey)
 	GAUGE_TABLE_ENTRY(&gaugehdr_voltmeter)
 	GAUGE_TABLE_ENTRY(&gaugehdr_engine1rpm)
+	GAUGE_TABLE_ENTRY(&gaugehdr_engine2rpm)
 	GAUGE_TABLE_ENTRY(&gaugehdr_airspeed)
-	GAUGE_TABLE_ENTRY(&gaugehdr_altimeter)
 	GAUGE_TABLE_ENTRY(&gaugehdr_oilpsi)
+	GAUGE_TABLE_ENTRY(&gaugehdr_oilpsie2)
 	GAUGE_TABLE_ENTRY(&gaugehdr_torquee1)
 	GAUGE_TABLE_ENTRY(&gaugehdr_fuelflowe1)
 	GAUGE_TABLE_ENTRY(&gaugehdr_proprpm)
+	GAUGE_TABLE_ENTRY(&gaugehdr_fuelflowe2)
+	GAUGE_TABLE_ENTRY(&gaugehdr_proprpme2)
+	GAUGE_TABLE_ENTRY(&gaugehdr_flightmap)
+	GAUGE_TABLE_ENTRY(&gaugehdr_xml_handler)
+	GAUGE_TABLE_ENTRY(&gaugehdr_systems_handler)
+	GAUGE_TABLE_ENTRY(&gaugehdr_com1)
 GAUGE_TABLE_END()
 
