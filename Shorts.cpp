@@ -1,14 +1,12 @@
 //Copyright (c) Daniel Lord.  All rights reserved. 
 
-//#include "..\inc\gauges.h"
-#include "dragonflight.h"
 #include "Short.h"
 #include "Global_variables.h"
 #include "fsxgauges_sp2.h"
 
 /******************GLOBAL VARIABLES***************************/
-//incoming power signal for all gauges.
-UINT8 power_on = 0;
+
+PELEMENT_STATIC_IMAGE	pstat = NULL;	//Mouse background data
 //incoming lights on for all gauges.
 UINT8 lights_on = 0;
 
@@ -42,15 +40,6 @@ UINT8 lights_on = 0;
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Attitude (needs re-aligned)
-/////////////////////////////////////////////////////////////////////////////
-#define     GAUGE_NAME          "Attitude"
-#define     GAUGEHDR_VAR_NAME   gaugehdr_attitude
-#define     GAUGE_W             100
-
-#include "Short.Attitude.cpp"
-
-/////////////////////////////////////////////////////////////////////////////
 // Fuel Left (working no issues)
 /////////////////////////////////////////////////////////////////////////////
 #define     GAUGE_NAME          "Fuel"
@@ -82,9 +71,6 @@ UINT8 lights_on = 0;
 // Voltmeter (need to fix xml script)
 /////////////////////////////////////////////////////////////////////////////
 
-/************** Mouse Background Data ***********************/
-PELEMENT_STATIC_IMAGE	pstat=NULL;
-
 #define		GAUGE_NAME			"Voltmeter"
 #define		GAUGEHDR_VAR_NAME	gaugehdr_voltmeter
 #define		GAUGE_W				100
@@ -108,16 +94,6 @@ PELEMENT_STATIC_IMAGE	pstat=NULL;
 #define		GAUGE_W				100
 
 #include	"Short.PpmPCTe2.cpp"
-
-/////////////////////////////////////////////////////////////////////////////
-// Airspeed (replaced to 3D no longer needed)
-/////////////////////////////////////////////////////////////////////////////
-
-#define		GAUGE_NAME				"Airspeed"
-#define		GAUGEHDR_VAR_NAME		gaugehdr_airspeed
-#define		GAUGE_W					100
-
-#include "Short.Airspeed.cpp"
 
 /////////////////////////////////////////////////////////////////////////////
 // Oil PSI/Temp (working no issues)(implementing custom effects)
@@ -202,14 +178,14 @@ PELEMENT_STATIC_IMAGE	pstat=NULL;
 /////////////////////////////////////////////////////////////////////////////
 // Flight Map
 /////////////////////////////////////////////////////////////////////////////
-#define GAUGE_NAME			"Flightmap"
-#define GAUGEHDR_VAR_NAME	gaugehdr_flightmap
-#define GAUGE_W				100
-
-#include "Shorts.FlightMap.cpp"
+//#define GAUGE_NAME			"Flightmap"
+//#define GAUGEHDR_VAR_NAME	gaugehdr_flightmap
+//#define GAUGE_W				100
+//
+//#include "Shorts.FlightMap.cpp"
 
 /////////////////////////////////////////////////////////////////////////////
-// Com1 (currently working)
+// Com1 (align text correctly)
 /////////////////////////////////////////////////////////////////////////////
 
 #define GAUGE_NAME			"Com1"
@@ -218,17 +194,17 @@ PELEMENT_STATIC_IMAGE	pstat=NULL;
 
 #include "Shorts.Com1.cpp"
 
+//add rest of comms here after text alignment on first is complete.
+
 /////////////////////////////////////////////////////////////////////////////
 // Gauge table entries
 /////////////////////////////////////////////////////////////////////////////
 GAUGE_TABLE_BEGIN()
-    GAUGE_TABLE_ENTRY(&gaugehdr_attitude)
     GAUGE_TABLE_ENTRY(&gaugehdr_fuel)
     GAUGE_TABLE_ENTRY(&gaugehdr_whiskey)
 	GAUGE_TABLE_ENTRY(&gaugehdr_voltmeter)
 	GAUGE_TABLE_ENTRY(&gaugehdr_engine1rpm)
 	GAUGE_TABLE_ENTRY(&gaugehdr_engine2rpm)
-	GAUGE_TABLE_ENTRY(&gaugehdr_airspeed)
 	GAUGE_TABLE_ENTRY(&gaugehdr_oilpsi)
 	GAUGE_TABLE_ENTRY(&gaugehdr_oilpsie2)
 	GAUGE_TABLE_ENTRY(&gaugehdr_torquee1)
@@ -236,7 +212,7 @@ GAUGE_TABLE_BEGIN()
 	GAUGE_TABLE_ENTRY(&gaugehdr_proprpm)
 	GAUGE_TABLE_ENTRY(&gaugehdr_fuelflowe2)
 	GAUGE_TABLE_ENTRY(&gaugehdr_proprpme2)
-	GAUGE_TABLE_ENTRY(&gaugehdr_flightmap)
+	//GAUGE_TABLE_ENTRY(&gaugehdr_flightmap)
 	GAUGE_TABLE_ENTRY(&gaugehdr_xml_handler)
 	GAUGE_TABLE_ENTRY(&gaugehdr_systems_handler)
 	GAUGE_TABLE_ENTRY(&gaugehdr_com1)
