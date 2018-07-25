@@ -5,7 +5,7 @@
 char com1_gauge_name[] =		GAUGE_NAME;
 extern PELEMENT_HEADER			com1_list;
 extern MOUSERECT				com1_mouse_rect[];
-
+GAUGE_CALLBACK					com1_update;
 GAUGE_HEADER_FS700(GAUGE_W, com1_gauge_name, &com1_list, com1_mouse_rect, 0, 0, 0, 0);
 
 MOUSE_BEGIN(com1_mouse_rect, 0, 0, 0)
@@ -17,6 +17,8 @@ FAILURE_RECORD com1_fail[] =
 	{ FAIL_SYSTEM_ELECTRICAL_PANELS, FAIL_ACTION_NONE },
 	{ FAIL_NONE, FAIL_ACTION_NONE }
 };
+
+
 
 int dimbrt = 0;
 int asi_pwr = 0;
@@ -48,49 +50,56 @@ FLOAT64 FSAPI lightstate_cb(PELEMENT_ICON pelement)
 	return dimbrt;
 }
 
-FLOAT64 FSAPI com1_update(PGAUGEHDR pgauge, int service_id, UINT32 extra_data)
+void FSAPI com1_update(PGAUGEHDR pgauge, int service_id, UINT32 extra_data)
 {
 	switch (service_id)
 	{
-		case PANEL_SERVICE_PRE_UPDATE:
-			if (power_on > 0)
+		/* "install_routine()" */
+
+	case    PANEL_SERVICE_PRE_INSTALL:
+		break;
+
+		/* "initialize_routine()" */
+
+	case    PANEL_SERVICE_PRE_INITIALIZE:
+
+		break;
+
+		/* "update_routine()" */
+
+	case    PANEL_SERVICE_PRE_UPDATE:
+
+		if (power_on != 0)
+		{
+			if (dimbrt == 1)
 			{
-				//Remove all lighting flags.
-				DARKEN_LISTELEMENT(pgauge->elements_list[0], 1);
-				DARKEN_LISTELEMENT(pgauge->elements_list[0], 2);
-				DARKEN_LISTELEMENT(pgauge->elements_list[0], 3);
-				DELUMINOUS_LISTELEMENT(pgauge->elements_list[0], 1);
-				DELUMINOUS_LISTELEMENT(pgauge->elements_list[0], 2);
-				DELUMINOUS_LISTELEMENT(pgauge->elements_list[0], 3);
-				
-				if (dimbrt == 1)
-				{
-					//sets backlighting to dim.
-					LUMINOUS_LISTELEMENT(pgauge->elements_list[0], 1);
-					LUMINOUS_LISTELEMENT(pgauge->elements_list[0], 2);
-					LUMINOUS_LISTELEMENT(pgauge->elements_list[0], 3);
-				}
-				else
-					if (dimbrt == 2)
-					{
-						//set backligting to bright.
-						LIGHT_LISTELEMENT(pgauge->elements_list[0], 1);
-						LIGHT_LISTELEMENT(pgauge->elements_list[0], 2);
-						LIGHT_LISTELEMENT(pgauge->elements_list[0], 3);
-					}
-				
+				//sets backlighting to dim.
+				LUMINOUS_LISTELEMENT(pgauge->elements_list[0], 1);
+				LUMINOUS_LISTELEMENT(pgauge->elements_list[0], 2);
+				LUMINOUS_LISTELEMENT(pgauge->elements_list[0], 3);
+
 			}
 			else
-			{
-				//if no power turn off lighting.
-				DARKEN_LISTELEMENT(pgauge->elements_list[0], 1);
-				DARKEN_LISTELEMENT(pgauge->elements_list[0], 2);
-				DARKEN_LISTELEMENT(pgauge->elements_list[0], 3);
-				DELUMINOUS_LISTELEMENT(pgauge->elements_list[0], 1);
-				DELUMINOUS_LISTELEMENT(pgauge->elements_list[0], 2);
-				DELUMINOUS_LISTELEMENT(pgauge->elements_list[0], 3);
-			}
-			break;
+				if (dimbrt == 2)
+				{
+					//set backligting to bright.
+					LIGHT_LISTELEMENT(pgauge->elements_list[0], 1);
+					LIGHT_LISTELEMENT(pgauge->elements_list[0], 2);
+					LIGHT_LISTELEMENT(pgauge->elements_list[0], 3);
+				}
+
+		}
+		else
+		{
+			//if no power turn off lighting.
+			DARKEN_LISTELEMENT(pgauge->elements_list[0], 1);
+			DARKEN_LISTELEMENT(pgauge->elements_list[0], 2);
+			DARKEN_LISTELEMENT(pgauge->elements_list[0], 3);
+			DELUMINOUS_LISTELEMENT(pgauge->elements_list[0], 1);
+			DELUMINOUS_LISTELEMENT(pgauge->elements_list[0], 2);
+			DELUMINOUS_LISTELEMENT(pgauge->elements_list[0], 3);
+		}
+		break;
 	}
 }
 
@@ -133,7 +142,7 @@ MAKE_STRING
 	com1_stby_7seg,
 	&com1_active_7seg_list,
 	&com1_fail,
-	IMAGE_USE_ERASE |  IMAGE_USE_TRANSPARENCY,
+	IMAGE_USE_ERASE | IMAGE_USE_BRIGHT | IMAGE_USE_TRANSPARENCY,
 	0,
 	100, 175,
 	80, 50,
@@ -163,9 +172,9 @@ MAKE_ICON
 (
 	com1_night,
 	BMP_COM1_NIGHT,
-	&com1_active_7seg_list,
+	&com1_stby_7seg_list,
 	NULL,
-	IMAGE_USE_ERASE | IMAGE_USE_TRANSPARENCY,
+	IMAGE_USE_ERASE | IMAGE_USE_BRIGHT | IMAGE_USE_TRANSPARENCY,
 	0,
 	0, 0,
 	MODULE_VAR_NONE,lightstate_cb,
@@ -192,7 +201,9 @@ MAKE_STATIC
 		0, 0
 	)
 
-PELEMENT_HEADER com1_list = &proprpm_background.header;
+PELEMENT_HEADER com1_list = &com1_background.header;
+
+
 //to do list
 // Com variable from VC matches display on gauge,[X]
 // Change from current to new freq.
