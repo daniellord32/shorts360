@@ -2,7 +2,7 @@
 
 #include "Short.h"
 #include "Global_variables.h"
-#include "fsxgauges_sp2.h"
+#include "dragonflight.h"
 
 /******************GLOBAL VARIABLES***************************/
 

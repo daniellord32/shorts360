@@ -23,13 +23,20 @@
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Attitude Bitmaps
+// Coms Bitmaps
 //
-#define		BMP_ATTITUDE_BACKGROUND				0x1000
-#define		BMP_ATTITUDE_CARD_INSIDE			0x1001
-#define		BMP_ATTITUDE_CARD_OUTSIDE_MASK		0x1002
-#define		BMP_ATTITUDE_CARD_OUTSIDE			0x1003
-#define		BMP_ATTITUDE_CARD_INSIDE_MASK		0x1004
+#define		BMP_COM1_BACKGROUND					0x1000
+#define		BMP_COM1_NIGHT						0x1001
+#define		BMP_COM2_BACKGROUND					0x1002
+#define		BMP_COM2_NIGHT						0x1003
+#define		BMP_NAV1_BACKGROUND					0x1004
+#define		BMP_NAV1_NIGHT						0x1005
+#define		BMP_NAV2_BACKGROUND					0x1006
+#define		BMP_NAV2_NIGHT						0x1007
+#define		BMP_ADF1_BACKGROUND					0x1008
+#define		BMP_ADF1_NIGHT						0x1009
+#define		BMP_ADF2_BACKGROUND					0x1010
+#define		BMP_ADF2_NIGHT						0x1011
 
 /////////////////////////////////////////////////////////////////////////////
 //
