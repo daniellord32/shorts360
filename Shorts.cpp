@@ -3,7 +3,7 @@
 #include "Short.h"
 #include "Global_variables.h"
 #include "dragonflight.h"
-
+#include "gauge_extensions.h"
 /******************GLOBAL VARIABLES***************************/
 
 PELEMENT_STATIC_IMAGE	pstat = NULL;	//Mouse background data
